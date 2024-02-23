@@ -1,40 +1,53 @@
-<button mat-raised-button (click)="handleDashboardSubmit()">
+<!-- <button mat-raised-button (click)="handleDashboardSubmit()">
   Refresh tasks
-</button>
+</button> -->
 
-<div class="main-task">
-  <form [formGroup]="selectedTasksForm" (ngSubmit)="removeSelectedTasks()">
-    <mat-selection-list formControlName="selectedTasks">
-      <h3 mat-subheader>Tasks</h3>
-      <div *ngIf="tasks.tasks.length===0" class="empty-task">
-        <h4>No tasks currently, add some!</h4>
-      </div>
-      <div *ngIf="tasks.tasks.length>0">
-        <mat-list-option *ngFor="let task of tasks.tasks" [value]="task" class="list-option">
-          <h4 mat-line>{{ task }}</h4>
-        </mat-list-option>
-      </div>
-    </mat-selection-list>
-    <div *ngIf="tasks.tasks.length>0" class="remove-div">
-      <button mat-mini-fab color="warn" class="remove-button">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
+<div class="dashboard-container">
+  
+  <div class="new-class-container">
+  <form
+    [formGroup]="taskForm"
+    (ngSubmit)="postNewTask()"
+    class="form-container"
+  >
+    <mat-card class="add-form-card">
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label> New task </mat-label>
+          <input formControlName="task" matInput autofocus />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-mini-fab class="button-add" type="submit" [disabled]="!taskForm.valid">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
   </form>
 </div>
 
-<form [formGroup]="taskForm" (ngSubmit)="postNewTask()" class="form-container">
-  <mat-card class="add-form-card">
-    <mat-card-content>
-      <mat-form-field>
-        <mat-label> New task </mat-label>
-        <input formControlName="task" matInput autofocus />
-      </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button type="submit" [disabled]="!taskForm.valid">
-        Submit
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+  <div class="main-task">
+    <form [formGroup]="selectedTasksForm" (ngSubmit)="removeSelectedTasks()">
+      <mat-selection-list formControlName="selectedTasks">
+        <h3 mat-subheader>Tasks</h3>
+        <div *ngIf="tasks.tasks.length === 0" class="empty-task">
+          <h4>No tasks currently, add some!</h4>
+        </div>
+        <div *ngIf="tasks.tasks.length > 0">
+          <mat-list-option
+            *ngFor="let task of tasks.tasks"
+            [value]="task"
+            class="list-option"
+          >
+            <h4 mat-line>{{ task }}</h4>
+          </mat-list-option>
+        </div>
+      </mat-selection-list>
+      <div *ngIf="tasks.tasks.length > 0" class="remove-div">
+        <button mat-mini-fab color="warn" class="remove-button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
