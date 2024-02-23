@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
+</head>
+<body>
+<div>
+    <h2>Register</h2>
+    <form th:action="@{/register/save}" method="post" role="form" th:object="${user}">
+        <input type="text" id="username" name="username" placeholder="Username" th:field="*{username}" required autofocus>
+        <input type="password" id="password" name="password" placeholder="Password" th:field="*{password}" required>
+        <button th:href="@{/register}" type="submit">RegisterXD</button>
+    </form>
+</div>
+</body>
+</html>

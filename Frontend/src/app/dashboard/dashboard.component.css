@@ -1,0 +1,21 @@
+.remove-button{
+    margin-left: auto;
+    margin-bottom: 5px;
+}
+.empty-task{
+    text-align: center;
+}
+.main-task{
+    border-color: black;
+    border: 5px solid;
+    text-align:center;
+    margin-right: 30%;
+}
+
+.list-option{
+    border-color: black;
+    border: 2px solid;
+    border-radius: 30px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}

@@ -1,0 +1,17 @@
+.app-logo{
+    height:80px;
+}
+
+.app-header{
+    background-color: #2e9cc7(26, 24, 24);
+    text-align: left;
+    color: brown;
+}
+
+.app-title{
+    font-size: 1.5em;
+}
+
+.spacer{
+    flex: 1 1 auto;
+}
