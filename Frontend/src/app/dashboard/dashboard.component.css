@@ -1,6 +1,6 @@
 .dashboard-container{
     display: block;
-    margin-top: 100px;
+    margin-top: 4vw;
     margin-left: 10%;
     margin-right: 10%;
     border: 0.1em solid;
@@ -9,13 +9,40 @@
 }
 
 .new-class-container{
-    width:15%;
+    margin-left: auto;
+    margin-right: auto;
+    width:70%;
     border: 0.1em solid;
     border-color: rgb(223, 20, 20);
 }
 
-.add-form-card{
+.form-container{
+    border: 0.2em solid;
+    border-color: rgb(255, 238, 0);
+    margin-top: 1em;
+}
+.new-task-input{
+    width: 450px;
+    height: 50px;
+    border: .1em solid;
+    border-color: rgb(12, 250, 103);
+}
 
+.new-task-input2{
+    width: 450px;
+    height: 36px;
+    border: 1em solid;
+    border-color: rgb(255, 0, 0);
+}
+
+.new-task-button{
+    text-align: center;
+    font-size: 2em;
+    width: 15px;
+    height: 50px;
+    margin-bottom: 15px;
+    border: 0.1em solid;
+    border-color: rgb(10, 47, 255);
 }
 
 .empty-task{
@@ -42,7 +69,4 @@
 .remove-button{
     margin-bottom: 5px;
     margin-right: 2%;
-}
-.button-add{
-    text-align: center;
 }

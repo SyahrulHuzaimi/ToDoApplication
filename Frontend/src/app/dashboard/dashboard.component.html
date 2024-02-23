@@ -3,28 +3,27 @@
 </button> -->
 
 <div class="dashboard-container">
-  
   <div class="new-class-container">
-  <form
-    [formGroup]="taskForm"
-    (ngSubmit)="postNewTask()"
-    class="form-container"
-  >
-    <mat-card class="add-form-card">
-      <mat-card-content>
-        <mat-form-field>
-          <mat-label> New task </mat-label>
-          <input formControlName="task" matInput autofocus />
-        </mat-form-field>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-mini-fab class="button-add" type="submit" [disabled]="!taskForm.valid">
-          <mat-icon>add</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
-</div>
+    <form
+      [formGroup]="taskForm"
+      (ngSubmit)="postNewTask()"
+      class="form-container"
+    >
+      <mat-form-field class="new-task-input">
+        <mat-label> New task </mat-label>
+        <input class="new-task-input2" formControlName="task" matInput autofocus />
+      </mat-form-field>
+
+      <button
+      mat-raised-button
+        class="new-task-button"
+        type="submit"
+        [disabled]="!taskForm.valid"
+      >
+        +
+      </button>
+    </form>
+  </div>
 
   <div class="main-task">
     <form [formGroup]="selectedTasksForm" (ngSubmit)="removeSelectedTasks()">
