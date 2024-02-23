@@ -58,26 +58,4 @@ export class LoginComponent {
       },
     });
   }
-
-  hello() {
-    this.http.get<any>('http://localhost:8080/hello').subscribe(data => {
-      this.content = data;
-      console.log("Value: ");
-      console.log(this.content);
-    })
-
-    console.log("xyz1");
-
-    /* this._authService
-      .hello()
-      .subscribe((response) => (this.content = response));
-    console.log('Value: ');
-    console.log(this.content); */
-   
-
-    /* this._authService.hello().subscribe((response) => {
-      console.log('Value: ');
-      console.log(response.responseMessage);
-    }); */
-  }
 }
