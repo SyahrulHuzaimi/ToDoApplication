@@ -3,20 +3,21 @@
 </button> -->
 
 <div class="dashboard-container">
-  <div class="new-class-container">
+
+  <div class="new-class-container3">
     <form
       [formGroup]="taskForm"
       (ngSubmit)="postNewTask()"
-      class="form-container"
+      class="form-container3"
     >
-      <mat-form-field class="new-task-input">
-        <mat-label> New task </mat-label>
-        <input class="new-task-input2" formControlName="task" matInput autofocus />
-      </mat-form-field>
-
+      <input
+        class="new-task-input3"
+        formControlName="task"
+        placeholder="Add new task ..."
+        autofocus
+      />
       <button
-      mat-raised-button
-        class="new-task-button"
+        class="new-task-button3"
         type="submit"
         [disabled]="!taskForm.valid"
       >
@@ -25,9 +26,15 @@
     </form>
   </div>
 
+  
+
   <div class="main-task">
-    <form [formGroup]="selectedTasksForm" (ngSubmit)="removeSelectedTasks()">
-      <mat-selection-list formControlName="selectedTasks">
+    <form
+      [formGroup]="selectedTasksForm"
+      (ngSubmit)="removeSelectedTasks()"
+      class="main-task-form"
+    >
+      <mat-selection-list formControlName="selectedTasks" class="form-list">
         <h3 mat-subheader>Tasks</h3>
         <div *ngIf="tasks.tasks.length === 0" class="empty-task">
           <h4>No tasks currently, add some!</h4>
@@ -42,6 +49,7 @@
           </mat-list-option>
         </div>
       </mat-selection-list>
+
       <div *ngIf="tasks.tasks.length > 0" class="remove-div">
         <button mat-mini-fab color="warn" class="remove-button">
           <mat-icon>delete</mat-icon>
@@ -50,3 +58,30 @@
     </form>
   </div>
 </div>
+
+<!-- <div class="new-class-container">
+  <form
+    [formGroup]="taskForm"
+    (ngSubmit)="postNewTask()"
+    class="form-container"
+  >
+    <mat-form-field class="new-task-input">
+      <mat-label> New task </mat-label>
+      <input
+        class="new-task-input2"
+        formControlName="task"
+        matInput
+        autofocus
+      />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      class="new-task-button"
+      type="submit"
+      [disabled]="!taskForm.valid"
+    >
+      +
+    </button>
+  </form>
+</div> -->
