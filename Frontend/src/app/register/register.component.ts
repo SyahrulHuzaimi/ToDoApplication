@@ -10,7 +10,8 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { CommonModule } from '@angular/common';
-
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +27,7 @@ export class RegisterComponent {
 
   constructor(
     private _authService: AuthService,
+    private http: HttpClient,
     private router: Router,
     private formBuilder: FormBuilder
   ) {}
@@ -36,8 +38,11 @@ export class RegisterComponent {
   });
 
   handleSubmitRegister() {
-    console.log(this.registerForm.value);
-    this._authService.register(this.registerForm).subscribe({
+    let httpRequest: Observable<any> = this.http.post(
+      this._authService.getRegisterUrl(),
+      this.registerForm.value
+    );
+    httpRequest.subscribe({
       next: (response) => {
         console.log(response.responseMessage);
         this.hasError = false;

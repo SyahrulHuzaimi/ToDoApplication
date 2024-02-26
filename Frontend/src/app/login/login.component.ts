@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent {
   hasError = false;
   errorMessage = '';
   hide = true;
-  content ='';
+  content = '';
 
   constructor(
     private _authService: AuthService,
@@ -34,12 +35,15 @@ export class LoginComponent {
 
   loginForm = this.formBuilder.group({
     username: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
 
   handleSubmitLogin() {
-    console.log(this.loginForm.value);
-    this._authService.login(this.loginForm).subscribe({
+    let httpRequest: Observable<any> = this.http.post(
+      this._authService.getLoginUrl(),
+      this.loginForm.value
+    );
+    httpRequest.subscribe({
       next: (response) => {
         if (response.accessToken) {
           console.log('Value: ');

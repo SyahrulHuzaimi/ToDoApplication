@@ -11,25 +11,21 @@ const BASE_URL = ['http://localhost:8080/'];
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(loginRequest: any): Observable<any> {
+  getLoginUrl(): string {
     localStorage.removeItem('JWTToken');
-    return this.http.post(BASE_URL + 'auth/login', loginRequest.value);
+    return BASE_URL + 'auth/login';
   }
 
-  register(registerRequest: any): Observable<any> {
-    return this.http.post(BASE_URL + 'auth/register', registerRequest.value);
+  getRegisterUrl(): string {
+    return BASE_URL + 'auth/register';
   }
 
-  getTasks(): Observable<any> {
-    return this.http.get(BASE_URL + 'tasks', {
-      headers: this.createAuthHeader(),
-    });
+  getTaskUrl(): string {
+    return BASE_URL + 'tasks';
   }
 
-  postTask(taskForm: FormGroup<{ task: FormControl<string> }>) {
-    return this.http.post(BASE_URL + 'tasks', taskForm.value, {
-      headers: this.createAuthHeader(),
-    });
+  getAuthHeader(): HttpHeaders {
+    return this.createAuthHeader();
   }
 
   hello(): Observable<any> {

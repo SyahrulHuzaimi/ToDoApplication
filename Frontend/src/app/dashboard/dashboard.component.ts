@@ -11,6 +11,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,28 +22,35 @@ import { MaterialModule } from '../material/material.module';
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-
   token = '';
   showLogin = false;
   tasks: TasksInt = {
     tasks: [],
   };
   taskForm = this.formBuilder.group({
-    task: ['', Validators.required]
+    task: ['', Validators.required],
   });
   selectedTasksForm = this.formBuilder.group({
-    selectedTasks: ''
-  })
+    selectedTasks: '',
+  });
 
   ngOnInit(): void {
     this.handleDashboardSubmit();
   }
 
-  constructor(private _authService: AuthService, private formBuilder: FormBuilder) {}
+  constructor(
+    private _authService: AuthService,
+    private formBuilder: FormBuilder,
+    private http: HttpClient
+  ) {}
 
   handleDashboardSubmit() {
     this.tasks.tasks = [''];
-    this._authService.getTasks().subscribe({
+    let httpRequest: Observable<any> = this.http.get(
+      this._authService.getTaskUrl(),
+      { headers: this._authService.getAuthHeader() }
+    );
+    httpRequest.subscribe({
       next: (response: TasksInt) => {
         this.tasks = response;
       },
@@ -53,7 +62,12 @@ export class DashboardComponent implements OnInit {
 
   postNewTask() {
     console.log(this.taskForm.value);
-    this._authService.postTask(this.taskForm).subscribe({
+    let httpRequest: Observable<any> = this.http.post(
+      this._authService.getTaskUrl(),
+      this.taskForm.value,
+      { headers: this._authService.getAuthHeader() }
+    );
+    httpRequest.subscribe({
       next: (response: TasksInt) => {
         this.tasks = response;
       },
@@ -61,14 +75,14 @@ export class DashboardComponent implements OnInit {
         console.log(error.value);
       },
     });
-    this.taskForm.patchValue({task:''})
+    this.taskForm.patchValue({ task: '' });
   }
 
   removeSelectedTasks() {
-    for (var val of this.selectedTasksForm.get('selectedTasks').value){
-      this.taskForm.get("task").setValue(val);
-      this.postNewTask()
+    for (var val of this.selectedTasksForm.get('selectedTasks').value) {
+      this.taskForm.get('task').setValue(val);
+      this.postNewTask();
     }
     console.log(this.selectedTasksForm.get('selectedTasks').value);
-    }
+  }
 }
