@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const BASE_URL = ['http://localhost:8080/'];
 
@@ -9,7 +9,16 @@ const BASE_URL = ['http://localhost:8080/'];
   providedIn: 'root',
 })
 export class AuthService {
+  
   constructor(private http: HttpClient) {}
+
+  private loggedInValue: boolean = false;
+  loggedIn : BehaviorSubject<boolean> = new BehaviorSubject<boolean> (false);
+
+  setLogin(bool: boolean) {
+    this.loggedInValue = bool;
+    this.loggedIn.next(this.loggedInValue);
+  }
 
   getLoginUrl(): string {
     localStorage.removeItem('JWTToken');

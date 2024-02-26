@@ -51,6 +51,7 @@ export class LoginComponent {
           localStorage.setItem('JWTToken', response.accessToken);
 
           this.hasError = false;
+          this._authService.setLogin(true);
 
           this.router.navigateByUrl('/dashboard');
         }
