@@ -1,97 +1,150 @@
 :root {
-	--omrs-color-ink-lowest-contrast: rgba(47, 60, 85, 0.18);
-	--omrs-color-ink-low-contrast: rgba(60, 60, 67, 0.3);
-	--omrs-color-ink-medium-contrast: rgba(19, 19, 21, 0.6);
-	--omrs-color-interaction: #1e4bd1;
-	--omrs-color-interaction-minus-two: rgba(73, 133, 224, 0.12);
-	--omrs-color-danger: #b50706;
-	--omrs-color-bg-low-contrast: #eff1f2;
-	--omrs-color-ink-high-contrast: #121212;
-	--omrs-color-bg-high-contrast: #ffffff;
-	
+  --omrs-color-ink-lowest-contrast: rgba(47, 60, 85, 0.18);
+  --omrs-color-ink-low-contrast: rgba(60, 60, 67, 0.3);
+  --omrs-color-ink-medium-contrast: rgba(19, 19, 21, 0.6);
+  --omrs-color-interaction: #1e4bd1;
+  --omrs-color-interaction-minus-two: rgba(73, 133, 224, 0.12);
+  --omrs-color-danger: #b50706;
+  --omrs-color-bg-low-contrast: #eff1f2;
+  --omrs-color-ink-high-contrast: #121212;
+  --omrs-color-bg-high-contrast: #ffffff;
 }
 
-
-.dashboard-container{
-    display: block;
-    margin-top: 4vw;
-    margin-left: 10%;
-    margin-right: 10%;
-    border: 0.1em solid;
-    border-color: rgb(10, 47, 255);
-    text-align: center;
+.dashboard-container {
+  margin-top: 4vw;
+  margin-left: 10%;
+  margin-right: 10%;
+  text-align: center;
 }
 
-.empty-task{
-    text-align: center;
-}
-.main-task{
-    border-color: black;
-    border: 5px solid;
-    text-align:center;
-    margin: 2% 10%;
+.input-form-container {
+  width: 100%;
+  text-align: center;
 }
 
-.main-task-form{
-    text-align: center;
+.input-and-button {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #15172b;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 90px;
+  padding: 25px 20px;
+  width: 80%;
 }
 
-.form-list{
-    text-align: center;
+.input-container {
+  float: left;
+  width: 95%;
 }
 
-.list-option{
-    text-align: center;
-    border-color: black;
-    border: 2px solid;
-    border-radius: 30px;
-    margin-bottom: 2px;
-    margin-top: 2px;
+.input {
+  background-color: #303245;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 30px;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
 }
 
-.remove-div{
-    text-align: right;
-}
-.remove-button{
-    margin-bottom: 5px;
-    margin-right: 8px;
-}
-
-.new-class-container3{
-    margin-left: auto;
-    margin-right: auto;
-    
-    border: 0.1em solid;
-    border-color: rgb(223, 20, 20);
-    text-align: center;
+.placeholder {
+  color: #65657b;
+  font-family: sans-serif;
+  left: 30px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 30px;
 }
 
-.form-container3{
-    width:80%;
-    border: 0.2em solid;
-    border-color: rgb(255, 238, 0);
-    margin-top: 1em;
-    display: inline-block;
+.input:focus ~ .placeholder,
+.input:not(:placeholder-shown) ~ .placeholder {
+  transform: translateY(-30px) scale(0.75);
 }
 
-.new-task-input3{
+.input:not(:placeholder-shown) ~ .placeholder {
+  color: #808097;
+}
+
+.input:focus ~ .placeholder {
+  color: #dc2f55;
+}
+
+.input-button {
+  float: right;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1.75em;
+  width: 30px;
+  height: 30px;
+  border-radius: 15%;
+  cursor: pointer;
+  vertical-align: middle;
+  line-height: 5px;
+}
+
+.empty-task {
+  text-align: center;
+}
+.main-task {
+  text-align: center;
+  margin: 2% 10%;
+}
+
+h2{
+    right: 10px;
+}
+
+.main-task-form {
+  text-align: center;
+}
+
+.form-list {
+  text-align: center;
+}
+
+.list-option {
+  text-align: center;
+  border-color: black;
+  border: 2px solid;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.remove-div {
+  text-align: right;
+}
+.remove-button {
+  margin-bottom: 5px;
+  margin-right: 8px;
+}
+
+.form-container {
+  width: 80%;
+  border: 0.2em solid;
+  border-color: rgb(255, 238, 0);
+  margin-top: 1em;
+  display: inline-block;
+  position: relative;
+}
+
+/* .new-task-label3{
+    position: relative;
+    width: 50.4375rem;
     box-sizing: border-box;
-    width: 70%;
+    position: relative;
+    width: 50.4375rem;
     height: 30px;
     border: 0.1em solid;
     border-color: rgb(255, 0, 0);
     padding-left: 10px;
     vertical-align: middle;
-}
-
-.new-task-button3{
-    box-sizing: border-box;
-    text-align: center;
-    font-size: 1.75em;
-    width: 30px;
-    height: 30px;
-    border-radius: 15%;
-    cursor: pointer;
-    vertical-align: middle;
-    line-height: 5px;
-}
+} */

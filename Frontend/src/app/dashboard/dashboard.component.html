@@ -3,30 +3,20 @@
 </button> -->
 
 <div class="dashboard-container">
-
-  <div class="new-class-container3">
-    <form
-      [formGroup]="taskForm"
-      (ngSubmit)="postNewTask()"
-      class="form-container3"
-    >
-      <input
-        class="new-task-input3"
-        formControlName="task"
-        
-        autofocus
-      /><span>TEXTTEXTTEXT</span>
-      <button
-        class="new-task-button3"
-        type="submit"
-        [disabled]="!taskForm.valid"
-      >
-        +
-      </button>
+  <div class="input-form-container">
+    <form [formGroup]="taskForm" (ngSubmit)="postNewTask()">
+      <div class="input-and-button">
+        <div class="input-container">
+          <input formControlName="task" class="input" placeholder=" " />
+          <label class="placeholder">New Task</label>
+        </div>
+        <button class="input-button" type="submit" [disabled]="!taskForm.valid">
+          +
+        </button>
+      </div>
     </form>
   </div>
 
-  
 
   <div class="main-task">
     <form
@@ -35,7 +25,7 @@
       class="main-task-form"
     >
       <mat-selection-list formControlName="selectedTasks" class="form-list">
-        <h3 mat-subheader>Tasks</h3>
+        <h2 mat-subheader>Tasks</h2>
         <div *ngIf="tasks.tasks.length === 0" class="empty-task">
           <h4>No tasks currently, add some!</h4>
         </div>
@@ -58,30 +48,3 @@
     </form>
   </div>
 </div>
-
-<!-- <div class="new-class-container">
-  <form
-    [formGroup]="taskForm"
-    (ngSubmit)="postNewTask()"
-    class="form-container"
-  >
-    <mat-form-field class="new-task-input">
-      <mat-label> New task </mat-label>
-      <input
-        class="new-task-input2"
-        formControlName="task"
-        matInput
-        autofocus
-      />
-    </mat-form-field>
-
-    <button
-      mat-raised-button
-      class="new-task-button"
-      type="submit"
-      [disabled]="!taskForm.valid"
-    >
-      +
-    </button>
-  </form>
-</div> -->
