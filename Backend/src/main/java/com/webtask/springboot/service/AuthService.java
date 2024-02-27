@@ -31,6 +31,7 @@ public class AuthService {
         var token = jwtIssuer.issue(principal.getUserId(), principal.getUsername(), roles);
         return LoginResponse.builder()
                 .accessToken(token)
+                .isAdmin(roles.toString().contains("ADMIN"))
                 .build();
     }
 }
