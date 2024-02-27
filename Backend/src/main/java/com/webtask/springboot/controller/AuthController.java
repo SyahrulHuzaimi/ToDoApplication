@@ -3,7 +3,7 @@ package com.webtask.springboot.controller;
 import com.webtask.springboot.domain.Task;
 import com.webtask.springboot.domain.User;
 import com.webtask.springboot.dto.*;
-import com.webtask.springboot.exceptions.ExistingUsernameException;
+import com.webtask.springboot.exceptions.RegistrationException;
 import com.webtask.springboot.security.UserPrincipal;
 import com.webtask.springboot.service.AuthService;
 import com.webtask.springboot.service.TaskService;
@@ -55,8 +55,11 @@ public class AuthController {
 
     @PostMapping("/auth/register")
     public ResponseEntity<ResponseDto> register(@RequestBody @Valid RegisterRequest request){
+        if(request.getPassword()==null || request.getPassword().isBlank()){
+            throw new RegistrationException("Password cannot be empty", HttpStatus.BAD_REQUEST);
+        }
         if (userService.userExists(request.getUsername())){
-            throw new ExistingUsernameException("User already exists", HttpStatus.BAD_REQUEST);
+            throw new RegistrationException("Username already exists.", HttpStatus.BAD_REQUEST);
         }
         userService.saveUser(request.getUsername(), request.getPassword());
         return new ResponseEntity<>(new ResponseDto("User " + request.getUsername() + " created!"), HttpStatus.CREATED);

@@ -1,7 +1,7 @@
 package com.webtask.springboot.controller;
 
 import com.webtask.springboot.dto.ResponseDto;
-import com.webtask.springboot.exceptions.ExistingUsernameException;
+import com.webtask.springboot.exceptions.RegistrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionController {
-    @ExceptionHandler(value = {ExistingUsernameException.class})
-    public ResponseEntity<?> existingUsername(){
-        return new ResponseEntity<>(new ResponseDto("Username already exists."), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(value = {RegistrationException.class})
+    public ResponseEntity<?> existingUsername(RegistrationException ex){
+        return new ResponseEntity<>(new ResponseDto(ex.getMessage()), ex.getHttpStatus());
     }
     @ExceptionHandler(value = {AuthenticationException.class})
     public ResponseEntity<?> wrongCredentials(){
