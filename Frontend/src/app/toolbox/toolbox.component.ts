@@ -19,18 +19,23 @@ export class ToolboxComponent implements OnInit, OnDestroy{
   ) {}
 
   isLoggedIn: boolean;
-  subscription: Subscription;
+  subcription1: Subscription;
+  subcription2: Subscription;
+  isAdmin: boolean;
 
   ngOnDestroy(): void {
-    this.subscription && this.subscription.unsubscribe();
+    this.subcription1 && this.subcription1.unsubscribe();
+    this.subcription2 && this.subcription2.unsubscribe();
   }
 
   ngOnInit(): void {  
-    this.subscription = this._authService.loggedIn.subscribe(loggedIn => this.isLoggedIn=loggedIn)
+    this.subcription1 = this._authService.loggedIn.subscribe(loggedIn => this.isLoggedIn=loggedIn)
+    this.subcription2 = this._authService.admin.subscribe(admin => this.isAdmin=admin)
   }
 
   logout() {
     this._authService.setLogin(false);
+    this._authService.setAdmin(false);
     localStorage.removeItem('JWTToken');
     this.router.navigateByUrl('/login');
     }

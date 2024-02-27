@@ -47,9 +47,10 @@ export class LoginComponent {
       next: (response) => {
         if (response.accessToken) {
           console.log('Value: ');
-          console.log(response.accessToken);
+          console.log(response.admin);
           localStorage.setItem('JWTToken', response.accessToken);
 
+          this._authService.setAdmin(response.admin);
           this.hasError = false;
           this._authService.setLogin(true);
 

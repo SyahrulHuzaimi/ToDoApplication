@@ -14,10 +14,17 @@ export class AuthService {
 
   loggedInValue: boolean = false;
   loggedIn : BehaviorSubject<boolean> = new BehaviorSubject<boolean> (false);
+  adminValue: boolean = false;
+  admin : BehaviorSubject<boolean> = new BehaviorSubject<boolean> (false);
 
   setLogin(bool: boolean) {
     this.loggedInValue = bool;
     this.loggedIn.next(this.loggedInValue);
+  }
+
+  setAdmin(bool: boolean) {
+    this.adminValue = bool;
+    this.admin.next(this.adminValue);
   }
 
   getLoginUrl(): string {
