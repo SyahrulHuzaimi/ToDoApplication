@@ -12,7 +12,7 @@ export class AuthService {
   
   constructor(private http: HttpClient) {}
 
-  private loggedInValue: boolean = false;
+  loggedInValue: boolean = false;
   loggedIn : BehaviorSubject<boolean> = new BehaviorSubject<boolean> (false);
 
   setLogin(bool: boolean) {
