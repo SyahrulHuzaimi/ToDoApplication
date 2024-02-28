@@ -63,16 +63,11 @@ public class AuthController {
     @PostMapping("/auth/changepassword")
     public HttpStatus changePassword(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody PasswordChangeRequestDto requestDto){
         PasswordEncoder encoder = SecurityConfiguration.passwordEncoder();
-        System.out.println("Here");
         if (!userPrincipal.getUsername().equals(requestDto.getUsername())){
-            System.out.println("here1");
             throw new RegistrationException("Invalid username or password", HttpStatus.UNPROCESSABLE_ENTITY);
         }
         User user = userService.findUserByUsername(userPrincipal.getUsername()).orElseThrow();
         if (!encoder.matches(requestDto.getPassword(), user.getPassword())){
-            System.out.println(user.getPassword());
-            System.out.println(requestDto.getPassword());
-            System.out.println(encoder.encode(requestDto.getPassword()));
             throw new RegistrationException("Invalid username or password", HttpStatus.UNPROCESSABLE_ENTITY);
         }
         user.setPassword(encoder.encode(requestDto.getNewPassword()));
