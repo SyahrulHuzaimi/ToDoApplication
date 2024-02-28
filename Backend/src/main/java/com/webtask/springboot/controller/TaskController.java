@@ -5,7 +5,6 @@ import com.webtask.springboot.domain.User;
 import com.webtask.springboot.dto.StringTasksDto;
 import com.webtask.springboot.dto.TaskDto;
 import com.webtask.springboot.security.UserPrincipal;
-import com.webtask.springboot.service.AuthService;
 import com.webtask.springboot.service.TaskService;
 import com.webtask.springboot.service.UserService;
 import jakarta.validation.Valid;
@@ -23,7 +22,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskController {
 
-    private final AuthService authService;
     private final UserService userService;
     private final TaskService taskService;
 

@@ -1,22 +1,22 @@
 package com.webtask.springboot.controller;
 
-import com.webtask.springboot.domain.Task;
-import com.webtask.springboot.domain.User;
-import com.webtask.springboot.dto.*;
+import com.webtask.springboot.dto.LoginRequest;
+import com.webtask.springboot.dto.LoginResponse;
+import com.webtask.springboot.dto.RegisterRequest;
+import com.webtask.springboot.dto.ResponseDto;
 import com.webtask.springboot.exceptions.RegistrationException;
 import com.webtask.springboot.security.UserPrincipal;
 import com.webtask.springboot.service.AuthService;
-import com.webtask.springboot.service.TaskService;
 import com.webtask.springboot.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +25,6 @@ public class AuthController {
 
     private final AuthService authService;
     private final UserService userService;
-    private final TaskService taskService;
 
     @GetMapping("/")
     public String greeting(){
