@@ -116,12 +116,15 @@ h2{
 }
 
 .list-option {
-  text-align: center;
+  text-align: left;
   border-color: black;
   border: 2px solid;
   border-radius: 30px;
   margin-bottom: 2px;
   margin-top: 2px;
+}
+
+.list-word{
 }
 
 .remove-div {
