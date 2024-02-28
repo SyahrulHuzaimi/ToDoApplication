@@ -37,21 +37,17 @@ public class AuthController {
         return new ResponseEntity<>(new ResponseDto("Hello World"), HttpStatus.OK);
     }
 
+    @GetMapping("/secured")
+    public String secured(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        return "Message received if logged in as: " + userPrincipal.getUsername() + ". With ID: " + userPrincipal.getUserId();
+    }
+
     @PostMapping("/auth/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request){
         LoginResponse loginResponse = authService.attemptLogin(request.getUsername(), request.getPassword());
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/secured")
-    public String secured(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        return "Message received if logged in as: " + userPrincipal.getUsername() + ". With ID: " + userPrincipal.getUserId();
-    }
-
-    @GetMapping("/admin")
-    public String admin(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        return "Admin Lounge, Hello " + userPrincipal.getUsername() + ", ID: " + userPrincipal.getUserId();
-    }
 
     @PostMapping("/auth/register")
     public ResponseEntity<ResponseDto> register(@RequestBody @Valid RegisterRequest request){
@@ -63,22 +59,5 @@ public class AuthController {
         }
         userService.saveUser(request.getUsername(), request.getPassword());
         return new ResponseEntity<>(new ResponseDto("User " + request.getUsername() + " created!"), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/tasks")
-    public StringTasksDto showTasks(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        Optional<User> optUser = userService.findUserByUsername(userPrincipal.getUsername());
-        User user = optUser.get();
-        List<Task> tasks= taskService.findByUser(user);
-        return taskService.getStringTasks(tasks);
-    }
-
-    @PostMapping("/tasks")
-    public StringTasksDto newTask(@RequestBody @Valid TaskDto taskDto, @AuthenticationPrincipal UserPrincipal userPrincipal){
-        Optional<User> optUser = userService.findUserByUsername(userPrincipal.getUsername());
-        User user = optUser.get();
-        taskService.newTask(taskDto.getTask(), user);
-        List<Task> tasks= taskService.findByUser(user);
-        return taskService.getStringTasks(tasks);
     }
 }
