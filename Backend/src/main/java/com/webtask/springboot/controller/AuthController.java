@@ -1,10 +1,9 @@
 package com.webtask.springboot.controller;
 
-import com.webtask.springboot.dto.LoginRequest;
-import com.webtask.springboot.dto.LoginResponse;
-import com.webtask.springboot.dto.RegisterRequest;
-import com.webtask.springboot.dto.ResponseDto;
+import com.webtask.springboot.domain.User;
+import com.webtask.springboot.dto.*;
 import com.webtask.springboot.exceptions.RegistrationException;
+import com.webtask.springboot.security.SecurityConfiguration;
 import com.webtask.springboot.security.UserPrincipal;
 import com.webtask.springboot.service.AuthService;
 import com.webtask.springboot.service.UserService;
@@ -13,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,5 +58,25 @@ public class AuthController {
         }
         userService.saveUser(request.getUsername(), request.getPassword());
         return new ResponseEntity<>(new ResponseDto("User " + request.getUsername() + " created!"), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/auth/changepassword")
+    public HttpStatus changePassword(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody PasswordChangeRequestDto requestDto){
+        PasswordEncoder encoder = SecurityConfiguration.passwordEncoder();
+        System.out.println("Here");
+        if (!userPrincipal.getUsername().equals(requestDto.getUsername())){
+            System.out.println("here1");
+            throw new RegistrationException("Invalid username or password", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        User user = userService.findUserByUsername(userPrincipal.getUsername()).orElseThrow();
+        if (!encoder.matches(requestDto.getPassword(), user.getPassword())){
+            System.out.println(user.getPassword());
+            System.out.println(requestDto.getPassword());
+            System.out.println(encoder.encode(requestDto.getPassword()));
+            throw new RegistrationException("Invalid username or password", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        user.setPassword(encoder.encode(requestDto.getNewPassword()));
+        userService.saveUser(user);
+        return HttpStatus.OK;
     }
 }

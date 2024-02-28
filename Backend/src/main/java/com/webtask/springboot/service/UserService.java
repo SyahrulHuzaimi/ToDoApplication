@@ -56,4 +56,8 @@ public class UserService {
         user.setRoles("ROLE_USER");
         userRepository.saveUser(user);
     }
+
+    public void saveUser(User user) {
+        userRepository.saveUser(user);
+    }
 }
