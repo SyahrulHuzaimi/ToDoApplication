@@ -37,7 +37,7 @@ export class ToolboxComponent implements OnInit, OnDestroy{
     this._authService.setLogin(false);
     this._authService.setAdmin(false);
     localStorage.removeItem('JWTToken');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/');
     }
 
   
