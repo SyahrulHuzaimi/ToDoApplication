@@ -10,3 +10,8 @@
     <a [hidden]="isLoggedIn" mat-button routerLink="/register">Register</a>
     <button [hidden]="!isLoggedIn" mat-button (click)="logout()">Logout</button>
   </mat-toolbar>
+
+  <div>
+    {{'login: ' + isLoggedIn}}
+    {{'admin: ' + isAdmin}}
+  </div>

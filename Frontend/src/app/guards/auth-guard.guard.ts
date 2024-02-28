@@ -24,12 +24,10 @@ export const authGuard: CanActivateFn = (
   console.log(userRoutes.includes(state.url) && loggedIn);
 
   if(adminRoutes.includes(state.url) && !isAdmin){
-    alert("Cant enter admin page!");
-    return router.navigate(['/']);
+    return router.navigateByUrl('/');
   }
   if(userRoutes.includes(state.url) && !loggedIn){
-    alert("Cant enter wihout login!");
-    return router.navigate(['/']);
+    return router.navigateByUrl('/');
   }
   
   return true;
