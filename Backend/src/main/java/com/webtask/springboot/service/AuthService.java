@@ -28,7 +28,8 @@ public class AuthService {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        var token = jwtIssuer.issue(principal.getUserId(), principal.getUsername(), roles);
+        long delay = 1000 * 60 * 5; //5 minutes
+        var token = jwtIssuer.issue(principal.getUserId(), principal.getUsername(), roles, delay);
         return LoginResponse.builder()
                 .accessToken(token)
                 .isAdmin(roles.toString().contains("ADMIN"))
