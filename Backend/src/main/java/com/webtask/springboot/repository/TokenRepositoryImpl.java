@@ -18,10 +18,6 @@ public class TokenRepositoryImpl implements TokenRepository {
     @Autowired
     private final DbTokenRepository repo;
 
-    public List<Token> findAllByUser(User user){
-        return repo.findAllByUser(user);
-    }
-
     public Optional<Token> findByJwtToken(String jwtToken){
         return repo.findByJwtToken(jwtToken);
     }
