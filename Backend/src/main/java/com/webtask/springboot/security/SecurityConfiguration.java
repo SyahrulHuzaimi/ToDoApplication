@@ -50,6 +50,7 @@ public class SecurityConfiguration{
                         .requestMatchers("/", "/hello").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/auth/refresh").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

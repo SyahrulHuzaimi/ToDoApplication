@@ -7,6 +7,8 @@ import com.webtask.springboot.security.SecurityConfiguration;
 import com.webtask.springboot.security.UserPrincipal;
 import com.webtask.springboot.service.AuthService;
 import com.webtask.springboot.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -73,5 +75,10 @@ public class AuthController {
         user.setPassword(encoder.encode(requestDto.getNewPassword()));
         userService.saveUser(user);
         return HttpStatus.OK;
+    }
+
+    @PostMapping("/auth/refresh")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response){
+        authService.refreshToken(request, response);
     }
 }
