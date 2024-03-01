@@ -32,7 +32,8 @@ public class TaskService {
 
     public void newTask(String taskName){
         List<Task> tasks = getTasks();
-        Task newTask = new Task(taskName);
+        Task newTask = new Task();
+        newTask.setTask(taskName);
         for(Task t: tasks){
             if(t.getTask().equals(newTask.getTask())){
                 removeTask(t);
@@ -60,7 +61,9 @@ public class TaskService {
 
     public void newTask(String taskName, User user){
         List<Task> tasks = findByUser(user);
-        Task newTask = new Task(taskName, user);
+        Task newTask = new Task();
+        newTask.setUser(user);
+        newTask.setTask(taskName);
         for(Task t: tasks){
             if(t.getTask().equals(newTask.getTask())){
                 removeTask(t);

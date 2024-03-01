@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +48,13 @@ public class JwtService {
 
     public void saveToken(Token token) {
         tokenRepository.saveToken(token);
+    }
+
+    Optional<Token> findByToken(String tokenString){
+        return tokenRepository.findByJwtToken(tokenString);
+    }
+
+    void deleteToken(Token token){
+        tokenRepository.deleteToken(token);
     }
 }

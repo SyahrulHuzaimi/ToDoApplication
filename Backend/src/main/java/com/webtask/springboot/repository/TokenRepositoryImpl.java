@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,8 +17,8 @@ public class TokenRepositoryImpl implements TokenRepository {
     @Autowired
     private final DbTokenRepository repo;
 
-    public Optional<Token> findByUser(User user){
-        return repo.findByUser(user);
+    public List<Token> findAllByUser(User user){
+        return repo.findAllByUser(user);
     }
 
     public Optional<Token> findByJwtToken(String jwtToken){
@@ -25,5 +26,9 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
     public Token saveToken(Token token){
         return repo.save(token);
+    }
+
+    public void deleteToken(Token token){
+        repo.delete(token);
     }
 }

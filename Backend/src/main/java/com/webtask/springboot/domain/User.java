@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
 import java.util.Set;
 @Getter
 @Setter
@@ -28,16 +29,16 @@ public class User{
 
     private String roles;
 
-//    public User(String username, String password, String role) {
-//        this.id = Long.parseLong(null);
-//        this.username = username;
-//        this.password = password;
-//        this.roles = role;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+    }
 
-//    public User(String username) {
-//        this.id= Long.parseLong(null);
-//        this.username = username;
-//        this.password=null;
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, roles);
+    }
 }

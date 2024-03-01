@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -17,8 +19,9 @@ public class Token {
     @GeneratedValue()
     private long id;
     private String jwtToken;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expireDate;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 }

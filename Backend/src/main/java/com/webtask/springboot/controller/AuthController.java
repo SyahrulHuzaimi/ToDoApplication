@@ -44,9 +44,9 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request){
-        LoginResponse loginResponse = authService.attemptLogin(request.getUsername(), request.getPassword());
-        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
+    public ResponseEntity<TokensResponse> login(@RequestBody @Valid LoginRequest request){
+        TokensResponse tokensResponse = authService.attemptLogin(request.getUsername(), request.getPassword());
+        return new ResponseEntity<>(tokensResponse, HttpStatus.OK);
     }
 
 
@@ -78,7 +78,8 @@ public class AuthController {
     }
 
     @PostMapping("/auth/refresh")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response){
-        authService.refreshToken(request, response);
+    public ResponseEntity<TokensResponse> refreshToken(HttpServletRequest request, HttpServletResponse response){
+        TokensResponse tokensResponse = authService.refreshToken(request);
+        return new ResponseEntity<>(tokensResponse, HttpStatus.OK);
     }
 }
