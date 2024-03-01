@@ -47,7 +47,9 @@ public class AuthService {
 
         //get user, create token object, save token to DB
         User user = userService.findUserByUsername(principal.getUsername()).orElseThrow();
+        jwtService.deleteExpiredTokens();
         saveToken(refreshToken, user, refreshDelay);
+
 
         return TokensResponse.builder()
                 .accessToken(accessToken)
@@ -62,7 +64,6 @@ public class AuthService {
                 .expireDate(new Date(System.currentTimeMillis() + delay))
                 .user(user)
                 .build();
-        System.out.println("here");
         jwtService.saveToken(token);
     }
 

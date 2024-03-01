@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,6 @@ public class TokenRepositoryImpl implements TokenRepository {
     public void deleteToken(Token token){
         repo.delete(token);
     }
+
+    public void deleteAllByExpireDateBefore(Date date){repo.deleteAllByExpireDateBefore(date);}
 }
