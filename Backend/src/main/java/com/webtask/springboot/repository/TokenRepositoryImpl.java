@@ -34,4 +34,6 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     public void deleteAllByExpireDateBefore(Date date){repo.deleteAllByExpireDateBefore(date);}
+
+    public void deleteAllByUser(User user){repo.deleteAllByUser(user);}
 }

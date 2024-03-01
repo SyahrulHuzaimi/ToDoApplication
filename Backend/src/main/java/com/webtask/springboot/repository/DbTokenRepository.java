@@ -12,4 +12,5 @@ public interface DbTokenRepository extends JpaRepository<Token, Long> {
     List<Token> findAllByUser(User user);
     Optional<Token> findByJwtToken(String jwtToken);
     void deleteAllByExpireDateBefore(Date date);
+    void deleteAllByUser(User user);
 }

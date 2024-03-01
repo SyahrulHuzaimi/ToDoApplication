@@ -4,12 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.webtask.springboot.domain.Token;
+import com.webtask.springboot.domain.User;
 import com.webtask.springboot.security.JwtDecoder;
 import com.webtask.springboot.security.JwtProperties;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -62,5 +61,10 @@ public class JwtService {
     @Transactional
     void deleteExpiredTokens(){
         tokenRepository.deleteAllByExpireDateBefore(new Date(System.currentTimeMillis()));
+    }
+
+    @Transactional
+    public void deleteAllByUser(User user){
+        tokenRepository.deleteAllByUser(user);
     }
 }

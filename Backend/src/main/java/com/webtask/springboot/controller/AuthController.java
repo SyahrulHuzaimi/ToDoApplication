@@ -6,9 +6,9 @@ import com.webtask.springboot.exceptions.RegistrationException;
 import com.webtask.springboot.security.SecurityConfiguration;
 import com.webtask.springboot.security.UserPrincipal;
 import com.webtask.springboot.service.AuthService;
+import com.webtask.springboot.service.JwtService;
 import com.webtask.springboot.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +27,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final UserService userService;
+    private final JwtService jwtService;
 
     @GetMapping("/")
     public String greeting(){
@@ -74,11 +75,12 @@ public class AuthController {
         }
         user.setPassword(encoder.encode(requestDto.getNewPassword()));
         userService.saveUser(user);
+        jwtService.deleteAllByUser(user);
         return HttpStatus.OK;
     }
 
     @PostMapping("/auth/refresh")
-    public ResponseEntity<TokensResponse> refreshToken(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<TokensResponse> refreshToken(HttpServletRequest request){
         TokensResponse tokensResponse = authService.refreshToken(request);
         return new ResponseEntity<>(tokensResponse, HttpStatus.OK);
     }

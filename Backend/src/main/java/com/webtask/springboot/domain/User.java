@@ -6,8 +6,7 @@ import lombok.*;
 
 import java.util.Objects;
 import java.util.Set;
-@Getter
-@Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

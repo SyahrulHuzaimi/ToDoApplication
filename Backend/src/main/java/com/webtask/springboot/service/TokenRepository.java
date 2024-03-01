@@ -9,12 +9,12 @@ import java.util.Optional;
 
 
 public interface TokenRepository {
-
-    List<Token> findAllByUser(User user);
     Optional<Token> findByJwtToken(String jwtToken);
 
     Token saveToken(Token token);
 
     void deleteToken(Token token);
     void deleteAllByExpireDateBefore(Date date);
+
+    void deleteAllByUser(User user);
 }
