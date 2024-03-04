@@ -55,6 +55,7 @@ public class AuthService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .isAdmin(roles.toString().contains("ADMIN"))
+                .expireDate(new Date(System.currentTimeMillis() + sessionDelay))
                 .build();
     }
 
@@ -96,6 +97,7 @@ public class AuthService {
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshTokenString)
                 .isAdmin(user.getRoles().contains("ADMIN"))
+                .expireDate(new Date(System.currentTimeMillis() + sessionDelay))
                 .build();
     }
 }
