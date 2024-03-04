@@ -6,7 +6,6 @@ import com.webtask.springboot.dto.TokensResponse;
 import com.webtask.springboot.exceptions.RegistrationException;
 import com.webtask.springboot.security.UserPrincipal;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

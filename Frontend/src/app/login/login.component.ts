@@ -49,6 +49,8 @@ export class LoginComponent {
           console.log('Value: ');
           console.log(response.admin);
           localStorage.setItem('JWTToken', response.accessToken);
+          localStorage.setItem('RefreshToken', response.refreshToken);
+          localStorage.setItem('expiration', response.expireDate);
 
           this._authService.setAdmin(response.admin);
           this.hasError = false;
