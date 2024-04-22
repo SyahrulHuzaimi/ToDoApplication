@@ -26,7 +26,9 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
 
-    long sessionDelay = 1000 * 60 * 5;  //5 minutes
+    long sessionDelay = 1000 * 30;  //30 seconds
+//    1000 * 60 * 5;  //5 minutes
+//    1000 * 30;  //30 seconds
     long refreshDelay = 1000 * 60 * 60 * 24 * 7;    //1 week
 
     public TokensResponse attemptLogin(String username, String password){
@@ -72,19 +74,19 @@ public class AuthService {
         final String refreshToken;
         final String username;
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-            throw new RegistrationException("No access", HttpStatus.FORBIDDEN);
+            throw new RegistrationException("No access 1", HttpStatus.FORBIDDEN);
         }
         System.out.println("Header= " + authHeader);
         refreshToken = authHeader.substring(7);
         username = jwtService.extractUsername(refreshToken);
         System.out.println("username: " + username);
         if(username == null){
-            throw new RegistrationException("No access", HttpStatus.FORBIDDEN);
+            throw new RegistrationException("No access 2", HttpStatus.FORBIDDEN);
         }
         var user = userService.findUserByUsername(username).orElseThrow();
         Token dbToken = jwtService.findByToken(refreshToken).orElseThrow();
         if(!user.equals(dbToken.getUser())){
-            throw new RegistrationException("No access", HttpStatus.FORBIDDEN);
+            throw new RegistrationException("No access 3", HttpStatus.FORBIDDEN);
         }
         jwtService.deleteToken(dbToken);
         var newAccessToken = jwtService.issueSession(user.getId(), user.getUsername(), Collections.singletonList(user.getRoles()), sessionDelay);

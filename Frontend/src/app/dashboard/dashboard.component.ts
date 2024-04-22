@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   handleDashboardSubmit() {
+    this._authService.refreshToken();
     this.tasks.tasks = [''];
     let httpRequest: Observable<any> = this.http.get(
       this._authService.getTaskUrl(),
@@ -61,6 +62,7 @@ export class DashboardComponent implements OnInit {
   }
 
   postNewTask() {
+    this._authService.refreshToken();
     console.log(this.taskForm.value);
     let httpRequest: Observable<any> = this.http.post(
       this._authService.getTaskUrl(),
