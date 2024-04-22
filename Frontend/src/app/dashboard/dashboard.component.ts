@@ -45,39 +45,55 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   handleDashboardSubmit() {
-    this._authService.refreshToken();
-    this.tasks.tasks = [''];
-    let httpRequest: Observable<any> = this.http.get(
-      this._authService.getTaskUrl(),
-      { headers: this._authService.getAuthHeader() }
-    );
-    httpRequest.subscribe({
-      next: (response: TasksInt) => {
-        this.tasks = response;
+    this._authService.refreshToken().subscribe({
+      next: (token) => {
+        // Token is refreshed, or not needed to be refreshed
+        this.tasks.tasks = [''];
+        let httpRequest: Observable<any> = this.http.get(
+          this._authService.getTaskUrl(),
+          { headers: this._authService.getAuthHeader() }
+        );
+  
+        httpRequest.subscribe({
+          next: (response: TasksInt) => {
+            this.tasks = response;
+          },
+          error: (error) => {
+            console.log(error.value);
+          },
+        });
       },
       error: (error) => {
-        console.log(error.value);
-      },
+        console.error('Failed to refresh token', error);
+      }
     });
   }
 
   postNewTask() {
-    this._authService.refreshToken();
-    console.log(this.taskForm.value);
-    let httpRequest: Observable<any> = this.http.post(
-      this._authService.getTaskUrl(),
-      this.taskForm.value,
-      { headers: this._authService.getAuthHeader() }
-    );
-    httpRequest.subscribe({
-      next: (response: TasksInt) => {
-        this.tasks = response;
+    this._authService.refreshToken().subscribe({
+      next: (token) => {
+        // Token is refreshed, or not needed to be refreshed
+        console.log(this.taskForm.value);
+        let httpRequest: Observable<any> = this.http.post(
+          this._authService.getTaskUrl(),
+          this.taskForm.value,
+          { headers: this._authService.getAuthHeader() }
+        );
+  
+        httpRequest.subscribe({
+          next: (response: TasksInt) => {
+            this.tasks = response;
+            this.taskForm.patchValue({ task: '' }); // Reset form value here on success
+          },
+          error: (error) => {
+            console.log(error.value);
+          },
+        });
       },
       error: (error) => {
-        console.log(error.value);
-      },
+        console.error('Failed to refresh token', error);
+      }
     });
-    this.taskForm.patchValue({ task: '' });
   }
 
   removeSelectedTasks() {

@@ -16,6 +16,8 @@ export class AuthService {
   adminValue: boolean = false;
   admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   buffer: number = 10000; //10 seconds
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private isRefreshing: boolean = false;
 
   setLogin(bool: boolean) {
     this.loggedInValue = bool;
@@ -84,32 +86,39 @@ export class AuthService {
     return expiration < today + this.buffer;
   }
 
-  refreshToken(): void {
+  refreshToken(): Observable<any> {
     if (!this.isTokenExpired()) {
-      return;
+      return this.refreshTokenSubject.asObservable();
     }
-    let httpRequest: Observable<any> = this.http.post(
-      BASE_URL + 'auth/refresh', {} ,
-      { headers: this.createRefreshHeader() }
-    );
-    httpRequest.subscribe({
-      next: (response) => {
-        if (response.accessToken) {
-          console.log('OldToken: ' + this.getAuthToken());
-          console.log('OldRefresh: ' + this.getRefreshToken());
-          localStorage.setItem('JWTToken', response.accessToken);
-          localStorage.setItem('RefreshToken', response.refreshToken);
-          localStorage.setItem('Expiration', response.expireDate);
-          console.log('NewToken: ' + this.getAuthToken());
-          console.log('NewRefresh: ' + this.getRefreshToken());
 
-          this.setAdmin(response.admin);
-          this.setLogin(true);
-        }
-      },
-      error: (error) => {
-        console.log('Bad Request: ' + error.error.responseMessage);
-      },
-    });
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshTokenSubject.next(null); // Clear the current token
+      
+      let httpRequest: Observable<any> = this.http.post(
+        BASE_URL + 'auth/refresh', {} ,
+        { headers: this.createRefreshHeader() }
+      );
+      httpRequest.subscribe({
+        next: (response) => {
+          if (response.accessToken) {
+            console.log('OldToken: ' + this.getAuthToken());
+            console.log('OldRefresh: ' + this.getRefreshToken());
+            localStorage.setItem('JWTToken', response.accessToken);
+            localStorage.setItem('RefreshToken', response.refreshToken);
+            localStorage.setItem('Expiration', response.expireDate);
+            console.log('NewToken: ' + this.getAuthToken());
+            console.log('NewRefresh: ' + this.getRefreshToken());
+  
+            this.setAdmin(response.admin);
+            this.setLogin(true);
+          }
+        },
+        error: (error) => {
+          console.log('Bad Request: ' + error.error.responseMessage);
+        },
+      });
+    }
+    return this.refreshTokenSubject.asObservable();
   }
 }

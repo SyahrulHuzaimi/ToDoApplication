@@ -19,6 +19,8 @@ export const authGuard: CanActivateFn = (
   const loggedIn = authService.loggedInValue;
   const isAdmin = authService.adminValue;
 
+  console.log("loggedInValue: " + loggedIn);
+
   if(adminRoutes.includes(state.url) && !isAdmin){
     return router.navigateByUrl('/');
   }
