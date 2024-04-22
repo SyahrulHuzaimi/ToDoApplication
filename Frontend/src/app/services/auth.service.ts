@@ -9,6 +9,7 @@ const BASE_URL = ['http://localhost:8080/'];
   providedIn: 'root',
 })
 export class AuthService {
+  
   constructor(private http: HttpClient) {}
 
   loggedInValue: boolean = false;
@@ -48,6 +49,15 @@ export class AuthService {
 
   hello(): Observable<any> {
     return this.http.get(BASE_URL + 'hello');
+  }
+
+  getLoggedInValue(){
+    this.loggedInValue = localStorage.getItem('RefreshToken') !== null;
+    return this.loggedInValue;
+  }
+
+  getAdminValue() {
+    return this.adminValue;
   }
 
   private createAuthHeader() {

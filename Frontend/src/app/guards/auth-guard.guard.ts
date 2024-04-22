@@ -16,7 +16,7 @@ export const authGuard: CanActivateFn = (
   const userRoutes: string[] = ['/dashboard'];
   const adminRoutes: string[] = ["/admin"];
 
-  const loggedIn = authService.loggedInValue;
+  const loggedIn = authService.getLoggedInValue();
   const isAdmin = authService.adminValue;
 
   console.log("loggedInValue: " + loggedIn);

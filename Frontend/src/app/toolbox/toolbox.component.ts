@@ -31,12 +31,14 @@ export class ToolboxComponent implements OnInit, OnDestroy{
   ngOnInit(): void {  
     this.subcription1 = this._authService.loggedIn.subscribe(loggedIn => this.isLoggedIn=loggedIn)
     this.subcription2 = this._authService.admin.subscribe(admin => this.isAdmin=admin)
+    this.isLoggedIn = this._authService.getLoggedInValue();
+    this.isAdmin = this._authService.getAdminValue();
   }
 
   logout() {
     this._authService.setLogin(false);
     this._authService.setAdmin(false);
-    localStorage.removeItem('JWTToken');
+    localStorage.clear();
     this.router.navigateByUrl('/');
     }
 
