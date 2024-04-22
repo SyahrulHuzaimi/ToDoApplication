@@ -53,10 +53,12 @@ export class AuthService {
 
   getLoggedInValue(){
     this.loggedInValue = localStorage.getItem('RefreshToken') !== null;
+    this.loggedIn.next(this.loggedInValue);
     return this.loggedInValue;
   }
 
   getAdminValue() {
+    this.admin.next(this.adminValue);
     return this.adminValue;
   }
 
