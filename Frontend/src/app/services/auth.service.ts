@@ -108,15 +108,12 @@ export class AuthService {
   refreshToken(): Observable<any> {
     let refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     if (!this.isTokenExpired()) {
-      console.log("Skip Request");
-      refreshTokenSubject.next("skipped");
+      refreshTokenSubject.next("Valid Refresh");
       return refreshTokenSubject.asObservable();
     }
 
     if (!this.isRefreshing) {
-      console.log('Refreshing...');
       this.isRefreshing = true;
-      //this.refreshTokenSubject.next(null); // Clear the current token
       
       let httpRequest: Observable<any> = this.http.post(
         BASE_URL + 'auth/refresh', {} ,
@@ -125,19 +122,14 @@ export class AuthService {
       httpRequest.subscribe({
         next: (response) => {
           if (response.accessToken) {
-            console.log('OldToken: ' + this.getAuthToken());
-            console.log('OldRefresh: ' + this.getRefreshToken());
             localStorage.setItem('JWTToken', response.accessToken);
             localStorage.setItem('RefreshToken', response.refreshToken);
             localStorage.setItem('Expiration', response.expireDate);
-            console.log('NewToken: ' + this.getAuthToken());
-            console.log('NewRefresh: ' + this.getRefreshToken());
   
             this.setAdmin(response.admin);
             this.setLogin(true);
             refreshTokenSubject.next(response.accessToken);
           }else{
-            console.log("Else Statement");
             refreshTokenSubject.next(null);
           }
           this.isRefreshing = false;
@@ -146,11 +138,9 @@ export class AuthService {
           console.log('Bad Request: ' + error.error.responseMessage);
           refreshTokenSubject.error(error);
           this.isRefreshing = false;
-          refreshTokenSubject = new BehaviorSubject<any>(null); // Reset the subject on error
         },
       });
     }
-    console.log("Right before returning");
     return refreshTokenSubject.asObservable();
   }
 }

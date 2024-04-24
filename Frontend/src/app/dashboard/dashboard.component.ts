@@ -50,7 +50,6 @@ export class DashboardComponent implements OnInit {
     this._authService.refreshToken().subscribe({
       next: (token) => {
         if(token){
-          // Token is refreshed, or not needed to be refreshed
         this.tasks.tasks = [''];
         let httpRequest: Observable<any> = this.http.get(
           this._authService.getTaskUrl(),
@@ -60,7 +59,6 @@ export class DashboardComponent implements OnInit {
         httpRequest.subscribe({
           next: (response: TasksInt) => {
             this.tasks = response;
-            //this.sub.unsubscribe;
           },
           error: (error) => {
             console.log(error.value);
@@ -75,13 +73,11 @@ export class DashboardComponent implements OnInit {
   }
 
   postNewTask() {
-    console.log('POST CALLED');
     this.sub = this._authService.refreshToken().subscribe({
       next: (token) => {
         if(token){
           // Token is refreshed, or not needed to be refreshed
           console.log(this.taskForm.value);
-          console.log("We in next");
           let httpRequest: Observable<any> = this.http.post(
             this._authService.getTaskUrl(),
             this.taskForm.value,
@@ -91,7 +87,6 @@ export class DashboardComponent implements OnInit {
           httpRequest.subscribe({
             next: (response: TasksInt) => {
               this.tasks = response;
-              console.log('We got a response');
               this.taskForm.patchValue({ task: '' }); // Reset form value here on success
             },
             error: (error) => {
