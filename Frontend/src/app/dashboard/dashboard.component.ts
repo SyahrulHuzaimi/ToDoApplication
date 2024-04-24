@@ -11,7 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -33,21 +33,24 @@ export class DashboardComponent implements OnInit {
   selectedTasksForm = this.formBuilder.group({
     selectedTasks: '',
   });
+  sub: Subscription;
 
   ngOnInit(): void {
+    console.log('INIT CALLED');
     this.handleDashboardSubmit();
   }
 
   constructor(
     private _authService: AuthService,
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
   ) {}
 
   handleDashboardSubmit() {
     this._authService.refreshToken().subscribe({
       next: (token) => {
-        // Token is refreshed, or not needed to be refreshed
+        if(token){
+          // Token is refreshed, or not needed to be refreshed
         this.tasks.tasks = [''];
         let httpRequest: Observable<any> = this.http.get(
           this._authService.getTaskUrl(),
@@ -57,11 +60,13 @@ export class DashboardComponent implements OnInit {
         httpRequest.subscribe({
           next: (response: TasksInt) => {
             this.tasks = response;
+            //this.sub.unsubscribe;
           },
           error: (error) => {
             console.log(error.value);
           },
         });
+        }
       },
       error: (error) => {
         console.error('Failed to refresh token', error);
@@ -70,25 +75,31 @@ export class DashboardComponent implements OnInit {
   }
 
   postNewTask() {
-    this._authService.refreshToken().subscribe({
+    console.log('POST CALLED');
+    this.sub = this._authService.refreshToken().subscribe({
       next: (token) => {
-        // Token is refreshed, or not needed to be refreshed
-        console.log(this.taskForm.value);
-        let httpRequest: Observable<any> = this.http.post(
-          this._authService.getTaskUrl(),
-          this.taskForm.value,
-          { headers: this._authService.getAuthHeader() }
-        );
-  
-        httpRequest.subscribe({
-          next: (response: TasksInt) => {
-            this.tasks = response;
-            this.taskForm.patchValue({ task: '' }); // Reset form value here on success
-          },
-          error: (error) => {
-            console.log(error.value);
-          },
-        });
+        if(token){
+          // Token is refreshed, or not needed to be refreshed
+          console.log(this.taskForm.value);
+          console.log("We in next");
+          let httpRequest: Observable<any> = this.http.post(
+            this._authService.getTaskUrl(),
+            this.taskForm.value,
+            { headers: this._authService.getAuthHeader() }
+          );
+          
+          httpRequest.subscribe({
+            next: (response: TasksInt) => {
+              this.tasks = response;
+              console.log('We got a response');
+              this.taskForm.patchValue({ task: '' }); // Reset form value here on success
+            },
+            error: (error) => {
+              console.log(error.value);
+            },
+          });
+        }
+        
       },
       error: (error) => {
         console.error('Failed to refresh token', error);
@@ -104,3 +115,4 @@ export class DashboardComponent implements OnInit {
     console.log(this.selectedTasksForm.get('selectedTasks').value);
   }
 }
+

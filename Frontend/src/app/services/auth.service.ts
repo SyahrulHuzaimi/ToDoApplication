@@ -1,7 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  filter,
+  tap,
+  throwError,
+} from 'rxjs';
 
 const BASE_URL = ['http://localhost:8080/'];
 
@@ -9,7 +16,6 @@ const BASE_URL = ['http://localhost:8080/'];
   providedIn: 'root',
 })
 export class AuthService {
-  
   constructor(private http: HttpClient) {}
 
   loggedInValue: boolean = false;
@@ -17,8 +23,9 @@ export class AuthService {
   adminValue: boolean = false;
   admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   buffer: number = 10000; //10 seconds
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  //private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private isRefreshing: boolean = false;
+
 
   setLogin(bool: boolean) {
     this.loggedInValue = bool;
@@ -31,7 +38,7 @@ export class AuthService {
   }
 
   getLoginUrl(): string {
-    localStorage.removeItem('JWTToken');
+    localStorage.clear();
     return BASE_URL + 'auth/login';
   }
 
@@ -51,7 +58,7 @@ export class AuthService {
     return this.http.get(BASE_URL + 'hello');
   }
 
-  getLoggedInValue(){
+  getLoggedInValue() {
     this.loggedInValue = localStorage.getItem('RefreshToken') !== null;
     this.loggedIn.next(this.loggedInValue);
     return this.loggedInValue;
@@ -99,13 +106,17 @@ export class AuthService {
   }
 
   refreshToken(): Observable<any> {
+    let refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     if (!this.isTokenExpired()) {
-      return this.refreshTokenSubject.asObservable();
+      console.log("Skip Request");
+      refreshTokenSubject.next("skipped");
+      return refreshTokenSubject.asObservable();
     }
 
     if (!this.isRefreshing) {
+      console.log('Refreshing...');
       this.isRefreshing = true;
-      this.refreshTokenSubject.next(null); // Clear the current token
+      //this.refreshTokenSubject.next(null); // Clear the current token
       
       let httpRequest: Observable<any> = this.http.post(
         BASE_URL + 'auth/refresh', {} ,
@@ -124,13 +135,22 @@ export class AuthService {
   
             this.setAdmin(response.admin);
             this.setLogin(true);
+            refreshTokenSubject.next(response.accessToken);
+          }else{
+            console.log("Else Statement");
+            refreshTokenSubject.next(null);
           }
+          this.isRefreshing = false;
         },
         error: (error) => {
           console.log('Bad Request: ' + error.error.responseMessage);
+          refreshTokenSubject.error(error);
+          this.isRefreshing = false;
+          refreshTokenSubject = new BehaviorSubject<any>(null); // Reset the subject on error
         },
       });
     }
-    return this.refreshTokenSubject.asObservable();
+    console.log("Right before returning");
+    return refreshTokenSubject.asObservable();
   }
 }
