@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { authGuard } from './guards/auth-guard.guard';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
+import { PasswordChangeComponent } from './password-change/password-change.component';
 
 export const routes: Routes = [
   { path: '', title: 'App Home Page', component: HomepageComponent },
@@ -19,6 +20,11 @@ export const routes: Routes = [
     path: 'dashboard',
     title: 'App Dashboard Page',
     component: DashboardComponent,
+    canActivate: [authGuard]
+  },
+  {path:'change',
+    title: 'Change Password',
+    component: PasswordChangeComponent,
     canActivate: [authGuard]
   }
 ];

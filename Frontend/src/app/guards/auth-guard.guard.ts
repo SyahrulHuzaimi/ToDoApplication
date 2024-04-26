@@ -13,7 +13,7 @@ export const authGuard: CanActivateFn = (
 ) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const userRoutes: string[] = ['/dashboard'];
+  const userRoutes: string[] = ['/dashboard', '/change'];
   const adminRoutes: string[] = ["/admin"];
 
   const loggedIn = authService.getLoggedInValue();
