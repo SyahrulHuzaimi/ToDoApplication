@@ -50,6 +50,10 @@ export class AuthService {
     return BASE_URL + 'tasks';
   }
 
+  getChangeUrl(): string {
+    return BASE_URL + 'auth/changepassword';
+  }
+
   getAuthHeader(): HttpHeaders {
     return this.createAuthHeader();
   }
