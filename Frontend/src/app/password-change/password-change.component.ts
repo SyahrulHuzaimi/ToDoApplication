@@ -18,19 +18,33 @@ export class PasswordChangeComponent {
 
   hasError = false;
   errorMessage = '';
-  hide = true;
+  hide1 = true;
+  hide2 = true;
+  hide3 = true;
   content = '';
   changeForm: FormGroup;
 
 
   handleChangePassword() {
+    //check password inputs => send http request => valid ? logout : display error,stay there
+    this.hasError = false;  //reset
+    if(this.changeForm.get('oldPassword')?.errors?.['required'] || this.changeForm.get('password')?.errors?.['required']){
+      this.hasError = true;
+      this.errorMessage = "All fields must be filled";
+      return;
+    }
+    if(this.changeForm?.errors?.['mismatch']){
+      this.hasError = true;
+      this.errorMessage = "New password must match";
+      return;
+    }
+    if(!this.changeForm?.valid){
+      this.hasError = true;
+      this.errorMessage = "Error somewhere";
+      return;
+    }
     console.log("Changing password");
     console.log(this.changeForm.value.confirmPassword);
-    if(!this.changeForm?.valid){
-      console.log("Invalid form");
-    }else{
-      console.log("Valid form");
-    }
   }
   constructor(private http: HttpClient) {
     this.changeForm = new FormGroup(
