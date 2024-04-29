@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 const checkEquality = (source : string, target : string) => {
+  console.log("Check validation");
   return (group: AbstractControl): ValidationErrors | null => {
     const sourceValue = group.get(source)?.value;
     const targetValue = group.get(target)?.value;
@@ -35,6 +36,12 @@ export class PasswordChangeComponent {
 
   handleChangePassword() {
     console.log("Changing password");
+    console.log(this.changeForm.value.repeatNewPassword);
+    if(!this.changeForm?.valid){
+      console.log("Invalid form");
+    }else{
+      console.log("Valid form");
+    }
   }
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {}
 

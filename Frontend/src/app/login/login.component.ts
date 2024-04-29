@@ -48,6 +48,7 @@ export class LoginComponent {
         if (response.accessToken) {
           console.log('Value: ');
           console.log(response.admin);
+          localStorage.setItem('Username', this.loginForm.value.username);
           localStorage.setItem('JWTToken', response.accessToken);
           localStorage.setItem('RefreshToken', response.refreshToken);
           localStorage.setItem('Expiration', response.expireDate);
