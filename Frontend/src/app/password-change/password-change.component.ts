@@ -1,23 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { HttpClient } from '@angular/common/http';
 
 
-const checkEquality = (source : string, target : string) => {
-  console.log("Check validation");
-  return (group: AbstractControl): ValidationErrors | null => {
-    const sourceValue = group.get(source)?.value;
-    const targetValue = group.get(target)?.value;
-    if(sourceValue !== targetValue){
-      return{
-        notEqual: true
-      }
-    }
-    return null;
-  } 
-}
+
 
 @Component({
   selector: 'app-password-change',
@@ -32,24 +20,32 @@ export class PasswordChangeComponent {
   errorMessage = '';
   hide = true;
   content = '';
+  changeForm: FormGroup;
 
 
   handleChangePassword() {
     console.log("Changing password");
-    console.log(this.changeForm.value.repeatNewPassword);
+    console.log(this.changeForm.value.confirmPassword);
     if(!this.changeForm?.valid){
       console.log("Invalid form");
     }else{
       console.log("Valid form");
     }
   }
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {}
+  constructor(private http: HttpClient) {
+    this.changeForm = new FormGroup(
+      {
+        oldPassword: new FormControl("", [Validators.required]),
+        password: new FormControl("", [Validators.required]),
+        confirmPassword: new FormControl("", [Validators.required]),
+      },{
+        validators: this.passwordMatchValidator
+      });
+  }
 
-  
-  changeForm = this.formBuilder.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-    repeatNewPassword: ['', Validators.required],
-    newPassword: ['', Validators.required],
-  }, [checkEquality('newPassword', 'repeatNewPassword')]);
+  passwordMatchValidator(control: AbstractControl){
+    return control.get('password')?.value === control.get('confirmPassword')?.value
+    ? null
+    : {mismatch: true};
+  }
 }
