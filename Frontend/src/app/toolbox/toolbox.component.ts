@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { MaterialModule } from '../material/material.module';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
