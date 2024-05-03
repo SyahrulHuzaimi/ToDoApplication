@@ -14,14 +14,10 @@ import { MatButtonModule } from '@angular/material/button';
 export class DialogLogoutComponent {
 
   constructor(
-    private _authService: AuthService,
     private router: Router,
   ) {}
   
   logout(){
-    this._authService.setLogin(false);
-    this._authService.setAdmin(false);
-    localStorage.clear();
     this.router.navigateByUrl('/');
   }
 }

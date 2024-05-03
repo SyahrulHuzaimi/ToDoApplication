@@ -101,6 +101,9 @@ export class PasswordChangeComponent {
   }
 
   openDialog(){
+    this._authService.setLogin(false);
+    this._authService.setAdmin(false);
+    localStorage.clear();
     this.dialog.open(DialogLogoutComponent);
   }
 
