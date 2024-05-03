@@ -58,6 +58,12 @@ export class AuthService {
     return this.createAuthHeader();
   }
 
+  getAuthHeaderJSON(): HttpHeaders {
+    let header = this.createAuthHeader();
+    header = header.set('Content-Type', 'application/json');
+    return header;
+  }
+
   hello(): Observable<any> {
     return this.http.get(BASE_URL + 'hello');
   }

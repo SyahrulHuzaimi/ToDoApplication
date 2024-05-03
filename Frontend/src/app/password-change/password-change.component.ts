@@ -37,51 +37,44 @@ export class PasswordChangeComponent {
     }
 
     let message = JSON.stringify({
-      'username' : localStorage.getItem('Username'),
-      'password' : this.changeForm.value.oldPassword,
-      'newPassword' : this.changeForm.value.password
+      'username': localStorage.getItem('Username'),
+      'password': this.changeForm.value.oldPassword,
+      'newPassword': this.changeForm.value.password
     });
 
     console.log(message);
 
     console.log("Changing password");
     console.log(this.changeForm.value.confirmPassword);
-    /* this.sub = this._authService.refreshToken().subscribe({
+    this.sub = this._authService.refreshToken().subscribe({
       next: (token) => {
-        if(token){
+        if (token) {
           // Token is refreshed, or not needed to be refreshed
 
           let httpRequest: Observable<any> = this.http.post(
             this._authService.getChangeUrl(),
-
+            message,
+            { headers:  this._authService.getAuthHeaderJSON()}
           );
 
-
-          console.log(this.taskForm.value);
-          let httpRequest: Observable<any> = this.http.post(
-            this._authService.getTaskUrl(),
-            this.taskForm.value,
-            { headers: this._authService.getAuthHeader() }
-          );
-          
           httpRequest.subscribe({
-            next: (response: TasksInt) => {
-              this.tasks = response;
-              this.taskForm.patchValue({ task: '' }); // Reset form value here on success
+            next: (response) => {
+              //Prompt the user to logout?, maybe call the logout component
+              console.log("ChPa Succ");
             },
             error: (error) => {
-              console.log(error.value);
+              //Just display error message
+              this.hasError = true;
+              this.errorMessage = "Wrong original password.";
+              console.log("ChPa Error");
             },
           });
-
-
         }
-        
       },
       error: (error) => {
         console.error('Failed to refresh token', error);
       }
-    }); */
+    });
 
   }
 
