@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from './material/material.module';
 import { ToolboxComponent } from './toolbox/toolbox.component';
+import { DialogLogoutComponent } from './dialog-logout/dialog-logout.component';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ import { ToolboxComponent } from './toolbox/toolbox.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    ToolboxComponent
+    ToolboxComponent,
+    DialogLogoutComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

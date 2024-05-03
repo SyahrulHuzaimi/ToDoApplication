@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogLogoutComponent } from '../dialog-logout/dialog-logout.component';
 
 
 
@@ -60,6 +62,7 @@ export class PasswordChangeComponent {
           httpRequest.subscribe({
             next: (response) => {
               //Prompt the user to logout?, maybe call the logout component
+              this.openDialog();
               console.log("ChPa Succ");
             },
             error: (error) => {
@@ -97,8 +100,12 @@ export class PasswordChangeComponent {
     return false;
   }
 
+  openDialog(){
+    this.dialog.open(DialogLogoutComponent);
+  }
 
-  constructor(private _authService: AuthService, private router: Router, private http: HttpClient) {
+
+  constructor(private _authService: AuthService, private router: Router, private http: HttpClient, public dialog: MatDialog) {
     this.changeForm = new FormGroup(
       {
         oldPassword: new FormControl("", [Validators.required]),
