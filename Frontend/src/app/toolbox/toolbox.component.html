@@ -6,10 +6,15 @@
     <a mat-button routerLink="/">Home</a>
     <a [hidden]="!isAdmin" mat-button routerLink="/admin">Admin</a>
     <a [hidden]="!isLoggedIn" mat-button routerLink="/dashboard">Dashboard</a>
-    <a [hidden]="!isLoggedIn" mat-button routerLink="/change">Change Password</a>
+    <button [matMenuTriggerFor]="profile" [hidden]="!isLoggedIn" mat-button>Profile</button>
+    <mat-menu #profile="matMenu" xPosition="before">
+      <button [hidden]="!isLoggedIn" mat-button  routerLink="/change">Change Password</button>
+      <button [hidden]="!isLoggedIn" mat-button  (click)="logout()">Logout</button>
+    </mat-menu>
+    
     <a [hidden]="isLoggedIn" mat-button routerLink="/login">Login</a>
     <a [hidden]="isLoggedIn" mat-button routerLink="/register">Register</a>
-    <button [hidden]="!isLoggedIn" mat-button (click)="logout()">Logout</button>
+    
   </mat-toolbar>
 
   <div>

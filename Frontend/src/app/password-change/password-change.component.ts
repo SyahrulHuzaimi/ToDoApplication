@@ -105,7 +105,7 @@ export class PasswordChangeComponent {
   }
 
 
-  constructor(private _authService: AuthService, private router: Router, private http: HttpClient, public dialog: MatDialog) {
+  constructor(private _authService: AuthService, private http: HttpClient, public dialog: MatDialog) {
     this.changeForm = new FormGroup(
       {
         oldPassword: new FormControl("", [Validators.required]),
