@@ -3,17 +3,17 @@
   
     <div class="spacer"></div>
   
-    <a mat-button routerLink="/">Home</a>
-    <a [hidden]="!isAdmin" mat-button routerLink="/admin">Admin</a>
-    <a [hidden]="!isLoggedIn" mat-button routerLink="/dashboard">Dashboard</a>
+    <button mat-button routerLink="/">Home</button>
+    <button [hidden]="!isAdmin" mat-button routerLink="/admin">Admin</button>
+    <button [hidden]="!isLoggedIn" mat-button routerLink="/dashboard">Dashboard</button>
     <button [matMenuTriggerFor]="profile" [hidden]="!isLoggedIn" mat-button>Profile</button>
-    <mat-menu #profile="matMenu" xPosition="before">
-      <button [hidden]="!isLoggedIn" mat-button  routerLink="/change">Change Password</button>
-      <button [hidden]="!isLoggedIn" mat-button  (click)="logout()">Logout</button>
+    <mat-menu #profile="matMenu">
+      <button [hidden]="!isLoggedIn" mat-menu-item routerLink="/change">Change Password</button>
+      <button [hidden]="!isLoggedIn" mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
     
-    <a [hidden]="isLoggedIn" mat-button routerLink="/login">Login</a>
-    <a [hidden]="isLoggedIn" mat-button routerLink="/register">Register</a>
+    <button [hidden]="isLoggedIn" mat-button routerLink="/login">Login</button>
+    <button [hidden]="isLoggedIn" mat-button routerLink="/register">Register</button>
     
   </mat-toolbar>
 
