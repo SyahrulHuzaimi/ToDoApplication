@@ -47,12 +47,10 @@ export class PasswordChangeComponent {
     console.log(message);
 
     console.log("Changing password");
-    console.log(this.changeForm.value.confirmPassword);
     this.sub = this._authService.refreshToken().subscribe({
       next: (token) => {
         if (token) {
           // Token is refreshed, or not needed to be refreshed
-
           let httpRequest: Observable<any> = this.http.post(
             this._authService.getChangeUrl(),
             message,
@@ -61,15 +59,13 @@ export class PasswordChangeComponent {
 
           httpRequest.subscribe({
             next: (response) => {
-              //Prompt the user to logout?, maybe call the logout component
+              //User is logged out, and prompted to home page
               this.openDialog();
-              console.log("ChPa Succ");
             },
             error: (error) => {
               //Just display error message
               this.hasError = true;
               this.errorMessage = "Wrong original password.";
-              console.log("ChPa Error");
             },
           });
         }
