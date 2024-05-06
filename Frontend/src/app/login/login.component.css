@@ -126,3 +126,7 @@
 .register-link p a:hover{
     text-decoration: underline;
 }
+
+.login-button.invalid {
+    background-color: hsl(var(--primary-hsl), .01);
+}

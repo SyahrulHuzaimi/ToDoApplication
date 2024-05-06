@@ -1,39 +1,17 @@
-<form
-  [formGroup]="registerForm"
-  (ngSubmit)="handleSubmitRegister()"
-  class="form-container"
->
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>Profile Information</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input formControlName="username" matInput autofocus/>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input
-          formControlName="password"
-          matInput
-          [type]="hide ? 'password' : 'text'"
-        />
-        <mat-icon matSuffix (click)="hide = !hide">{{
-          hide ? "visibility_off" : "visibility"
-        }}</mat-icon>
-      </mat-form-field>
-      <mat-error *ngIf="hasError">{{ errorMessage }}</mat-error>
-    </mat-card-content>
-    <mat-card-actions>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="!registerForm.valid"
-      >
-        Submit
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+<div class="fullscreen-container">
+  <div class="register-container">
+    <h1 class="register-title">Welcome</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="handleSubmitRegister()" class="form-container">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" formControlName="username" autofocus>
+      </div>
+      <div class="input-group" [ngClass]="{'error' : hasError==true}">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" formControlName="password">
+        <span class="msg">{{ errorMessage }}</span>
+      </div>
+      <button type="submit" class="register-button" [ngClass]="{'invalid' : !registerForm.valid}" [disabled]="!registerForm.valid">Register</button>
+    </form>
+  </div>
+</div>
