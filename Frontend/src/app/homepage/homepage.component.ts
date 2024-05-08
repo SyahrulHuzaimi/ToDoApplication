@@ -8,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
-
+  username: string; 
+  constructor(){
+    this.username = localStorage.getItem('Username') !== null ? localStorage.getItem('Username') : null;
+  }
 }

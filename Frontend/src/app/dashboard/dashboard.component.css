@@ -20,13 +20,15 @@
 .input-form-container {
   width: 100%;
   text-align: center;
+  
 }
 
 .input-and-button {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  background-color: #3f51b5;
+  --color: hsl(var(--primary-dark-hsl), .7);
+  background-color: var(--color);
   border-radius: 20px;
   box-sizing: border-box;
   height: 90px;
@@ -40,8 +42,7 @@
 }
 
 .input {
-  background-color: #303245;
-  border-radius: 12px;
+  background-color: hsl(var(--primary-light-hsl), .3);  border-radius: 12px;
   border: 0;
   box-sizing: border-box;
   color: #eee;
@@ -53,7 +54,8 @@
 }
 
 .placeholder {
-  color: #65657b;
+  /* color: #65657b; */
+  color: white;
   font-family: sans-serif;
   left: 30px;
   line-height: 14px;
@@ -77,6 +79,10 @@
   color: #dc2f55;
 }
 
+.input:focus{
+  box-shadow: 0 0 0 1px hsl(var(--primary-hsl));
+}
+
 .input-button {
   float: right;
   box-sizing: border-box;
@@ -91,8 +97,13 @@
   padding-right: 1px;
   padding-left: 0px;
   padding-bottom: 4px;
-  background-color: darkcyan;
+  background-color: hsl(var(--primary-hsl), .25);
   color: blueviolet;
+}
+
+.input-button:hover, 
+.input-button:focus {
+    background-color: hsl(var(--primary-hsl), .4);
 }
 
 .empty-task {
